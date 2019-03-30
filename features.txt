@@ -1,0 +1,5 @@
+-encrypt (file name)
+-decrypt (file name)
+-weather (Location)
+-video (Song name)
+-mkdir(Directory)
