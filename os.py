@@ -3,6 +3,8 @@ import argparse
 from samppy import *
 from weather import *
 from capture import *
+from mkdir import *
+from touch import *
 
 INVALID_FILETYPE_MSG = "Error: Invalid file format. %s must be a .txt file."
 INVALID_PATH_MSG = "Error: Invalid file path/name. Path %s does not exist."
@@ -105,6 +107,16 @@ def capture(args):
     getcapture(x)
     print("Say Cheese")
 
+def mkdirr(args):
+    x = args.mkdir[0]
+    mkdir(x)
+
+def touchh(args):
+    x = args.touch[0]
+    touch(x)
+
+
+
 
 def main():  
     parser = argparse.ArgumentParser(description = "A Custom command Line") 
@@ -143,6 +155,12 @@ def main():
     parser.add_argument("-capture", type = str, nargs = 1, 
                         metavar = ('capture'), 
                         help = "capture photo")
+    parser.add_argument("-mkdir", type = str, nargs = 1, 
+                        metavar = ('show_dir'), 
+                        help = "show_dir")
+    parser.add_argument("-touch", type = str, nargs = 1, 
+                        metavar = ('create_file'), 
+                        help = "create_file")
 
 
 
@@ -166,7 +184,11 @@ def main():
     elif args.decrypt != None: 
         decrypt(args)
     elif args.capture != None: 
-        getcapture(args)  
+        getcapture(args)
+    elif args.mkdir != None: 
+        mkdirr(args) 
+    elif args.touch != None: 
+        touchh(args)  
   
 
 if __name__ == "__main__":  

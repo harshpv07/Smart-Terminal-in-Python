@@ -3,3 +3,7 @@
 -weather (Location)
 -video (Song name)
 -mkdir(Directory)
+-capture(filename)
+-touch (filename)
+- cd
+- ls
