@@ -48,7 +48,7 @@ def delete(args):
     os.remove(file_name) 
     print("Successfully deleted {}.".format(file_name)) 
       
-  
+
 def copy(args): 
     file1 = args.copy[0] 
     file2 = args.copy[1] 
@@ -115,6 +115,40 @@ def touchh(args):
     x = args.touch[0]
     touch(x)
 
+def pwd(args):
+    import os
+    x = args.pwd[0]
+    if(x == 'c'):
+        cwd = os.getcwd()
+        print(cwd)
+
+def clone(args):
+    from git import Repo
+    git_url = str(args.clone[0])
+    repo_dir = str(args.clone[1])
+    Repo.clone_from(git_url, repo_dir)
+    print("Repository created and downloaded")
+
+def push(args):
+    from git import Repo
+    PATH_OF_GIT_REPO = str(args.push[0])
+    COMMIT_MESSAGE = str(args.push[1])
+    try:
+        repo = Repo(PATH_OF_GIT_REPO)
+        repo.git.add(update=True)
+        repo.index.commit(COMMIT_MESSAGE)
+        origin = repo.remote(name='origin')
+        origin.push()
+    except:
+        print('Some error occured while pushing the code')
+    finally:
+        print('Code push from script succeeded')       
+
+def ls(args):
+    import os
+    dir = str(args.ls[0])
+    print(os.listdir(dir))
+
 
 
 
@@ -135,7 +169,7 @@ def main():
     parser.add_argument("-c", "--copy", type = str, nargs = 2, 
                         metavar = ('file1','file2'), help = "Copy file1 contents to \ file2 Warning: file2 will get overwritten.") 
       
-    parser.add_argument("--rename", type = str, nargs = 2, 
+    parser.add_argument("-rename", type = str, nargs = 2, 
                         metavar = ('old_name','new_name'), 
                         help = "Renames the specified file to a new name.")
     parser.add_argument("-video", type = str, nargs = 1, 
@@ -161,6 +195,19 @@ def main():
     parser.add_argument("-touch", type = str, nargs = 1, 
                         metavar = ('create_file'), 
                         help = "create_file")
+    parser.add_argument("-pwd", type = str, nargs = 1, 
+                        metavar = ('curr_dir'), 
+                        help = "curr_dir")
+    parser.add_argument("-clone", type = str, nargs = 2, 
+                        metavar = ('clone_fromgit'), 
+                        help = "clone_fromgit")
+    parser.add_argument("-push", type = str, nargs = 2, 
+                        metavar = ('push_togit'), 
+                        help = "push_togit")
+    parser.add_argument("-ls", type = str, nargs = 1, 
+                        metavar = ('show_dir'), 
+                        help = "show_dir")
+
 
 
 
@@ -188,7 +235,15 @@ def main():
     elif args.mkdir != None: 
         mkdirr(args) 
     elif args.touch != None: 
-        touchh(args)  
+        touchh(args) 
+    elif args.pwd != None: 
+        pwd(args)
+    elif args.clone != None: 
+        clone(args)  
+    elif args.push != None: 
+        push(args) 
+    elif args.ls != None: 
+        ls(args)
   
 
 if __name__ == "__main__":  

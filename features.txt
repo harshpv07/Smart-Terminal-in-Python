@@ -3,7 +3,14 @@
 -weather (Location)
 -video (Song name)
 -mkdir(Directory)
+-rename (old filename) (new filename)
+Copy: -c (current file) (to copy file)
+Delete: -d (current file)
+Read: -r (filename)
 -capture(filename)
 -touch (filename)
 - cd
-- ls
+- ls (directory)
+- pwd c (current dir)
+-clone (git dir) (store dir)
+-push (repo folder) (commit message)
