@@ -5,6 +5,7 @@ from weather import *
 from capture import *
 from mkdir import *
 from touch import *
+from getNics import *
 
 INVALID_FILETYPE_MSG = "Error: Invalid file format. %s must be a .txt file."
 INVALID_PATH_MSG = "Error: Invalid file path/name. Path %s does not exist."
@@ -87,11 +88,8 @@ def encrypt(args):
     bufferSize = 64 * 1024
     x = args.encrypt[0]
     l = input("Set password")
-    # encrypt
     pyAesCrypt.encryptFile(x,(x+".aes"), l, bufferSize)
     os.remove(x)
-    # decrypt
-    #pyAesCrypt.decryptFile("data.txt.aes", "dataout.txt", password, bufferSize)
 
 def decrypt(args):
     import pyAesCrypt
@@ -140,7 +138,7 @@ def push(args):
         origin = repo.remote(name='origin')
         origin.push()
     except:
-        print('Some error occured while pushing the code')
+        print('* * * * * * * * * * * *')
     finally:
         print('Code push from script succeeded')       
 
@@ -149,8 +147,28 @@ def ls(args):
     dir = str(args.ls[0])
     print(os.listdir(dir))
 
+def browse(args):
+    import webbrowser
+    ur = str(args.browse[0])
+    st = "https://www.google.com/search?q=" + ur
+    print("Opening the browser")
+    webbrowser.open_new(st)
 
+def getNicss(args):
+    x = str(args.getNics[0])
+    if(x == 'ip'):
+        nics = getNics()
+        for nic in nics :
+            for k,v in nic.items() :
+                print('%s : %s'%(k,v))
+            print()
 
+def netstat(args):
+    x = str(args.netstat[0])
+    if (x == "ip"):
+        import os
+        a=os.popen('netstat -a').read()
+        print ('\n Connections',a )
 
 def main():  
     parser = argparse.ArgumentParser(description = "A Custom command Line") 
@@ -207,6 +225,15 @@ def main():
     parser.add_argument("-ls", type = str, nargs = 1, 
                         metavar = ('show_dir'), 
                         help = "show_dir")
+    parser.add_argument("-browse", type = str, nargs = 1, 
+                        metavar = ('search'), 
+                        help = "search")
+    parser.add_argument("-getNics", type = str, nargs = 1, 
+                        metavar = ('ipconfig'), 
+                        help = "ipconfig")
+    parser.add_argument("-netstat", type = str, nargs = 1, 
+                        metavar = ('netstat'), 
+                        help = "netstat")
 
 
 
@@ -244,7 +271,46 @@ def main():
         push(args) 
     elif args.ls != None: 
         ls(args)
+    elif args.browse != None: 
+        browse(args)
+    elif args.getNics != None: 
+        getNicss(args)
+    elif args.netstat != None: 
+        netstat(args)        
   
 
 if __name__ == "__main__":  
-    main() 
+    main()
+    print("-----------------------------------------------------------------------------------")
+    print("")
+    print("To perform a given task pls enter the code in the given format")
+    print("")
+    print("python os.py -<function name> <parameters>")
+    print("")
+    print("")
+    print("")
+    print("-encrypt (file name)")
+    print("-decrypt (file name)")
+    print("-weather (Location)")
+    print("-video (Song name)")
+    print("-mkdir(Directory)")
+    print("-rename (old filename) (new filename)")
+    print("Copy: -c (current file) (to copy file)")
+    print("Delete: -d (current file)")
+    print("Read: -r (filename)")
+    print("-capture(filename)")
+    print("-touch (filename)")
+    print("- cd")
+    print("- ls (directory)")
+    print("- pwd c (current dir)")
+    print("-clone (git dir) (store dir)")
+    print("-push (repo folder) (commit message)")
+    print("-browse (search title)")
+    print("-getNics ip")
+    print("-netstat ip")
+    print("")
+    print("")
+    print("")
+    print("Lets get started")
+    print("-------------------------------------------------------------------")
+    

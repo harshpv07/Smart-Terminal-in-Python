@@ -4,5 +4,3 @@ def pat(path):
 
 x = input("Enter the path")
 pat(x)
-
-#cd in python
